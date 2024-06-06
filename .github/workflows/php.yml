@@ -41,10 +41,10 @@ jobs:
       run: chmod -R 777 bootstrap/cache
 
     - name: Set Laravel cache path
-      run: echo "CACHE_PATH=bootstrap/cache" >> .env
+      run: echo "CACHE_PATH=bootstrap/cache" > .env
 
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      run: composer i
 
     - name: Copy sample .env.example file
       run: cp .env.example .env
@@ -73,6 +73,7 @@ jobs:
 
     - name: Create storage link
       run: php artisan storage:link
+
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
