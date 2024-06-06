@@ -46,6 +46,34 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
+    - name: Copy sample .env.example file
+      run: cp .env.example .env
+
+    - name: Generate app key in .env file
+      run: php artisan key:generate
+
+    - name: Update mail section in .env
+      run: |
+        echo "MAIL_MAILER=smtp" >> .env
+        echo "MAIL_HOST=smtppro.zoho.in" >> .env
+        echo "MAIL_PORT=587" >> .env
+        echo "MAIL_USERNAME=info@aarajewelryco.com" >> .env
+        echo "MAIL_PASSWORD=password" >> .env
+        echo "MAIL_ENCRYPTION=tls" >> .env
+        echo "MAIL_FROM_ADDRESS=info@aarajewelryco.com" >> .env
+        echo "MAIL_FROM_NAME=\${APP_NAME}" >> .env
+        echo "" >> .env
+        echo "APP_URL=https://email-app.aarajewelryco.com" >> .env
+        echo "APP_ENV=production" >> .env
+
+    - name: Set permissions for storage and bootstrap/cache folders
+      run: |
+        sudo chgrp -R www-data storage bootstrap/cache
+        sudo chmod -R ug+rwx storage bootstrap/cache
+
+    - name: Create storage link
+      run: php artisan storage:link
+
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
