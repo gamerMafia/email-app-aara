@@ -1,0 +1,25 @@
+name: Composer
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install PHP and Composer
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        tools: 'composer:v2'
+
+    - name: Install dependencies
+      run: composer install
+
+    # Add more steps here as needed
