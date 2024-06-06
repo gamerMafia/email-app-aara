@@ -41,7 +41,7 @@ jobs:
       run: chmod -R 777 bootstrap/cache
 
     - name: Set Laravel cache path
-      run: php -r "file_put_contents('.env', 'CACHE_PATH=bootstrap/cache')"
+      run: echo "CACHE_PATH=bootstrap/cache" >> .env
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
